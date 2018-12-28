@@ -1,0 +1,10 @@
+
+Pjsip/
+
+ToratlefonScripts/\.idea/
+
+TortalefonServer/\.mvn/wrapper/
+
+TortalefonServer/mvnw
+
+*.cmd
