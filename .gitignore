@@ -1,6 +1,10 @@
 
 Pjsip/
 
+Csip/build
+Csip/CsipSimple.iml
+Csip/app/build
+
 ToratlefonScripts/\.idea/
 
 TortalefonServer/\.mvn/wrapper/
