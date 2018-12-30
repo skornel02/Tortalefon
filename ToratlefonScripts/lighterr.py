@@ -20,6 +20,11 @@ p.start(0)
 errorLow = True
 idleLow = True
 
+p.ChangeDutyCycle(0)
+IO.output(7, IO.LOW)
+for pin in circlePins:
+    IO.output(pin, IO.LOW)
+
 try:
     while True:
         try:

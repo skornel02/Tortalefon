@@ -31,12 +31,11 @@ public class WifiManager {
     private List<String> trash;
 
     @Autowired
-    public WifiManager(@Value("${torta.ip}") String address) {
+    public WifiManager(@Value("${torta.ip}") String address, @Value("${torta.wpasupplicant}") String wpaPath) {
         this.address = address;
         networks = new ArrayList<>();
         trash = new ArrayList<>();
-        path = System.getProperty("os.name").equals("Windows 10") ?
-                "/wpa.dummy" : "/etc/wpa_supplicant/wpa_supplicant.conf";
+        path = wpaPath;
         loadWifiNetworks();
     }
 

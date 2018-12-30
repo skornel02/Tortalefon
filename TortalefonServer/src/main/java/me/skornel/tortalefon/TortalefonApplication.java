@@ -1,6 +1,5 @@
 package me.skornel.tortalefon;
 
-import com.sun.javafx.PlatformUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -29,19 +27,35 @@ public class TortalefonApplication {
 
 	private static void loadLibrary() throws IOException{
 		String os = System.getProperty("os.name").toLowerCase();
-		if(os.contains("win")){
-			System.out.println("Loading windows library...");
-			File tmpDir = new File(System.getProperty("java.io.tmpdir"), "pjsua2.dll");
-			if(!tmpDir.exists()){
-				InputStream resource = TortalefonApplication.class.getClassLoader().getResourceAsStream("lib/pjsua2.dll");
-				System.out.println("creating new dll \n" + tmpDir.getAbsolutePath());
-				Files.copy(resource, Paths.get(tmpDir.getPath()));
+		try {
+			if(os.contains("win")){
+				System.out.println("Loading windows library...");
+				File tmpDir = new File(System.getProperty("java.io.tmpdir"), "pjsua2.dll");
+				if(!tmpDir.exists()){
+					InputStream resource = TortalefonApplication.class.getClassLoader().getResourceAsStream("lib/win64/pjsua2.dll");
+					System.out.println("creating new dll \n" + tmpDir.getAbsolutePath());
+					Files.copy(resource, Paths.get(tmpDir.getPath()));
+				}
+				System.load(tmpDir.getAbsolutePath());
+				return;
+			}else if(os.contains("linux/")) {
+				System.out.println("Loading linux library...");
+				File tmpDir = new File(System.getProperty("java.io.tmpdir"), "pjsua2.so");
+				if (!tmpDir.exists()) {
+					InputStream resource = TortalefonApplication.class.getClassLoader().getResourceAsStream("lib/linux64/pjsua2.so");
+					System.out.println("creating new so \n" + tmpDir.getAbsolutePath());
+					Files.copy(resource, Paths.get(tmpDir.getPath()));
+				}
+				System.load(tmpDir.getAbsolutePath());
+				return;
 			}
-			System.load(tmpDir.getAbsolutePath());
-		}else {
-			System.out.println("No prebuilt library found... forcing java loadLibrary for pjsua2...");
-			System.loadLibrary("pjsua2");
+		}catch (Exception ex){
+			ex.printStackTrace();
+			System.out.println("Exception happened while loading default libraries: " + ex.getMessage()
+					+ "\n falling back to java.path");
 		}
+		System.out.println("force loading java loadLibrary for pjsua2...");
+		System.loadLibrary("pjsua2");
 	}
 
 	@Bean
