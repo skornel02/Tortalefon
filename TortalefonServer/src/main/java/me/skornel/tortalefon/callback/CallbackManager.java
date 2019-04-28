@@ -5,10 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 public class CallbackManager {
@@ -30,7 +31,7 @@ public class CallbackManager {
     private void loadCallbacks(){
         try {
             callbacks = new ArrayList<>();
-            Stream.of(mapper.readValue(new File(path, "callbacks"), Callback[].class)).forEach(callbacks::add);
+            callbacks.addAll(Arrays.asList(mapper.readValue(new File(path, "callbacks"), Callback[].class)));
         } catch (IOException e) {
             callbacks = new ArrayList<>();
             e.printStackTrace();

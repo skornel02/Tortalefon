@@ -1,6 +1,5 @@
 package me.skornel.tortalefon;
 
-import me.skornel.tortalefon.pjsip.CallWrapper;
 import me.skornel.tortalefon.pjsip.SipManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

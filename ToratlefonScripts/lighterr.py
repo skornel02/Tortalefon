@@ -31,35 +31,37 @@ try:
             response = request = requests.get(url + status, timeout=1).content
 
             if "In call" in response or "In hold" in response:
-                print "In a call"
+                print("In a call")
                 p.ChangeDutyCycle(0)
                 IO.output(7, IO.HIGH)
                 time.sleep(3)
 
             elif "Calling..." in response or "Ringing" in response:
-                print "Ringing"
+                print("Ringing")
                 IO.output(7, IO.LOW)
                 p.ChangeDutyCycle(0)
-                for x in range(0, 8, 1):
+                for x in range(0, 8, 2):
                     IO.output(circlePins[x % 4], IO.HIGH)
-                    time.sleep(0.4)
+                    time.sleep(0.8)
                     IO.output(circlePins[x % 4], IO.LOW)
 
             else:
-                print "Nothing"
+                print("Nothing")
+                for pin in circlePins:
+                    IO.output(pin, IO.LOW)
                 IO.output(7, IO.LOW)
                 if idleLow:
-                    for x in range(10, 90, 5):
+                    for x in range(10, 90, 10):
                         p.ChangeDutyCycle(x)
-                        time.sleep(0.1)
+                        time.sleep(0.4)
                 else:
-                    for x in range(90, 10, -5):
+                    for x in range(90, 10, -10):
                         p.ChangeDutyCycle(x)
-                        time.sleep(0.1)
+                        time.sleep(0.4)
                 idleLow = not idleLow
 
-        except (requests.exceptions.ConnectionError, requests.exceptions.ReadTimeout) :
-            print "Error connecting"
+        except (requests.exceptions.ConnectionError, requests.exceptions.ReadTimeout):
+            print("Error connecting")
             IO.output(7, IO.LOW)
             p.ChangeDutyCycle(0)
             if errorLow:
@@ -68,7 +70,7 @@ try:
             else:
                 for pin in circlePins:
                     IO.output(pin, IO.LOW)
-            time.sleep(3)
+            time.sleep(1.5)
 except KeyboardInterrupt:
     p.stop()
     IO.cleanup()

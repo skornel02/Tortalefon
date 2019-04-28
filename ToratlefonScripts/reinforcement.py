@@ -9,18 +9,19 @@ pressed = False
 IO.setmode(IO.BCM)
 IO.setup(21, IO.IN)
 
-print "input enabled"
+print("input enabled")
 
 while True:
     if IO.input(21) and not pressed:
-        time.sleep(0.1)
+        time.sleep(0.2)
         if IO.input(21):
             pressed = True
-            print "Called"
+            print("Called")
             requests.get(url + path)
             time.sleep(5)
         else:
-            time.sleep(0.1)
+            time.sleep(0.2)
     else:
         if pressed and not IO.input(21):
             pressed = False
+        time.sleep(0.2)

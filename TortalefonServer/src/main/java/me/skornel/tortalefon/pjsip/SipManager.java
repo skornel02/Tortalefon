@@ -5,6 +5,7 @@ import me.skornel.tortalefon.pjsip.overrides.MyCall;
 import me.skornel.tortalefon.wifi.WifiManager;
 import org.pjsip.pjsua2.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +24,12 @@ public class SipManager {
     private Set<CallWrapper> calls;
 
     private final WifiManager wifiManager;
+    private final String codec;
 
     @Autowired
-    public SipManager(Account account, WifiManager wifiManager){
+    public SipManager(Account account, WifiManager wifiManager, @Value("${torta.codec}") String codec){
         this.wifiManager = wifiManager;
+        this.codec = codec;
         try {
             calls = new HashSet<>();
             this.account = account;
@@ -64,6 +67,14 @@ public class SipManager {
         tpConfig.setPort(5060);
         endpoint.transportCreate(pjsip_transport_type_e.PJSIP_TRANSPORT_UDP, tpConfig);
         endpoint.libStart();
+
+        for(int x = 0 ; x < endpoint.codecEnum().size() ; x++){
+            System.out.println(endpoint.codecEnum().get(x).getCodecId());
+            System.out.println(endpoint.codecEnum().get(x).getPriority());
+            System.out.println();
+        }
+
+        endpoint.codecSetPriority(codec, (short)200);
     }
 
     private void createLocalAccount() throws Exception {

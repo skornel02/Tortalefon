@@ -1,15 +1,18 @@
-
+kornel/
 pjsip/
 pjsip2/
 
 Csip/build
 Csip/CsipSimple.iml
 Csip/app/build
+Csip/\.idea
+Csip/\.gradle
+Csip/local.properties
 
 ToratlefonScripts/\.idea/
+ToratlefonScripts/venv
 
 TortalefonServer/\.mvn/wrapper/
-
 TortalefonServer/mvnw
 
 *.cmd
