@@ -57,7 +57,7 @@
             </div>
             <div class="form-group col-md-3">
                 <label for="type">Type:</label>
-                <select type="text" id="type" th:field="*{type}">
+                <select class="custom-select" type="text" id="type" th:field="*{type}">
                     <option th:each="type : ${T(me.skornel.tortalefon.callback.CallbackType).getValues()}"
                             th:value="${type}"
                             th:text="${type}">
