@@ -2,6 +2,7 @@ package me.skornel.tortalefon;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -16,8 +17,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-@EnableAutoConfiguration
-@ComponentScan("me.skornel.tortalefon")
+@SpringBootApplication
 @EnableScheduling
 public class TortalefonApplication {
 

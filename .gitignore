@@ -1,3 +1,5 @@
+.idea/
+
 kornel/
 pjsip/
 pjsip2/
@@ -12,7 +14,17 @@ Csip/local.properties
 ToratlefonScripts/\.idea/
 ToratlefonScripts/venv
 
+TortalefonRustScripts/target
+
 TortalefonServer/\.mvn/wrapper/
 TortalefonServer/mvnw
 
 *.cmd
+*.iml
+
+#Added by cargo
+#
+#already existing elements are commented out
+
+/target
+**/*.rs.bk
